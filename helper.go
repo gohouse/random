@@ -1,26 +1,25 @@
 package random
 
 import (
-	"fmt"
 	"math/rand"
 )
 
 func getRandType() RandType {
 	var ct = []RandType{
 		// 大写字母
-		CAPITAL,
+		T_CAPITAL,
 		// 小写字母
-		LOWERCASE,
+		T_LOWERCASE,
 		// 数字
-		NUMBERIC,
+		T_NUMBERIC,
 		// 小写字母+数字
-		LOWERCASE_NUMBERIC,
+		T_LOWERCASE_NUMBERIC,
 		// 大写字母+数字
-		CAPITAL_NUMBERIC,
+		T_CAPITAL_NUMBERIC,
 		// 大写字母+小写字母
-		CAPITAL_LOWERCASE,
+		T_CAPITAL_LOWERCASE,
 		// 数字+字母
-		ALL,
+		T_ALL,
 	}
 	l := len(ct)
 	i := rand.Intn(l)
@@ -32,25 +31,25 @@ func getCharactorFromStr(str string) string {
 	return string(([]rune(str))[rand.Intn(strLen-1)])
 }
 
-func getFillStr(rt RandType) string {
-	switch rt {
-	case CAPITAL:
-		return capital
-	case LOWERCASE:
-		return lowercase
-	case NUMBERIC:
-		return numberic
-	case CAPITAL_LOWERCASE:
-		return fmt.Sprint(capital, lowercase)
-	case CAPITAL_NUMBERIC:
-		return fmt.Sprint(capital, numberic)
-	case LOWERCASE_NUMBERIC:
-		return fmt.Sprint(lowercase, numberic)
-	case ALL:
-		return fmt.Sprint(capital, lowercase, numberic)
-	}
-	return ""
-}
+//func getFillStr(rt RandType) string {
+//	switch rt {
+//	case T_CAPITAL:
+//		return StrCapital
+//	case T_LOWERCASE:
+//		return StrLowercase
+//	case T_NUMBERIC:
+//		return StrNumberic
+//	case T_CAPITAL_LOWERCASE:
+//		return fmt.Sprint(StrCapital, StrLowercase)
+//	case T_CAPITAL_NUMBERIC:
+//		return fmt.Sprint(StrCapital, StrNumberic)
+//	case T_LOWERCASE_NUMBERIC:
+//		return fmt.Sprint(StrLowercase, StrNumberic)
+//	case T_ALL:
+//		return fmt.Sprint(StrCapital, StrLowercase, StrNumberic)
+//	}
+//	return ""
+//}
 
 func randBetween(min, max int) int {
 	return rand.Intn(max-min+1) + min

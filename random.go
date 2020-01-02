@@ -1,45 +1,23 @@
 package random
 
-import (
-	"math/rand"
-	"time"
-)
-
-// RandType ...
-type RandType int
-
-const (
-	// 大写字母
-	CAPITAL RandType = iota + 1
-	// 小写字母
-	LOWERCASE
-	// 数字
-	NUMBERIC
-	// 小写字母+数字
-	LOWERCASE_NUMBERIC
-	// 大写字母+数字
-	CAPITAL_NUMBERIC
-	// 大写字母+小写字母
-	CAPITAL_LOWERCASE
-	// 数字+字母
-	ALL
-)
-
-var (
-	numberic  = `0123456789`
-	lowercase = `abcdefghijklmnopqrstuvwxyz`
-	capital   = `ABCDEFGHIJKLMNOPQRSTUVWXYZ`
-)
-
-func init() {
-	rand.Seed(time.Now().UnixNano())
-}
-
-// Rand 随机生成6-32位的随机字符串(长度类型皆随机)
-func Rand() string {
-	var rt = getRandType()
-	var length = randBetween(6, 32)
-	return random(length, rt)
+// Rand 默认随机生成6-32位的随机字符串(长度类型皆随机)
+// 如果传入不同的参数,则分别对应不同的函数
+func Rand(args ...interface{}) string {
+	switch len(args) {
+	case 1:
+		return Random(args[0].(int))
+	case 2:
+		if r,ok := args[1].(RandType);ok {
+			return Random(args[0].(int), r)
+		}
+		return RandomBetween(args[0].(int),args[1].(int))
+	case 3:
+		return RandomBetween(args[0].(int),args[1].(int),args[2].(RandType))
+	default:
+		var rt = getRandType()
+		var length = randBetween(6, 32)
+		return randomReal(length, rt)
+	}
 }
 
 // Random 随机生成指定长度的随机字符串(类型可选或随机)
@@ -50,7 +28,7 @@ func Random(length int, fill ...RandType) string {
 	} else {
 		rt = getRandType()
 	}
-	return random(length, rt)
+	return randomReal(length, rt)
 }
 
 // RandomBetween 随机生成指定长度区间的随机字符串(类型可选或随机)
@@ -62,11 +40,11 @@ func RandomBetween(min, max int, fill ...RandType) string {
 		rt = getRandType()
 	}
 	var length = randBetween(min, max)
-	return random(length, rt)
+	return randomReal(length, rt)
 }
 
-func random(length int, fill RandType) string {
-	str := getFillStr(fill)
+func randomReal(length int, fill RandType) string {
+	str := fill.String()
 	var res string
 	var i = length
 	for i > 0 {
@@ -74,4 +52,39 @@ func random(length int, fill RandType) string {
 		i--
 	}
 	return res
+}
+
+func RandCapital(length ...int) string {
+	if len(length)>0 {
+		return Random(length[0], T_CAPITAL)
+	}
+	return RandomBetween(6,32, T_CAPITAL)
+}
+
+func RandLowercase(length ...int) string {
+	if len(length)>0 {
+		return Random(length[0], T_LOWERCASE)
+	}
+	return RandomBetween(6,32, T_LOWERCASE)
+}
+
+func RandString(length ...int) string {
+	if len(length)>0 {
+		return Random(length[0], T_CAPITAL_LOWERCASE)
+	}
+	return Random(randBetween(6,32), T_CAPITAL_LOWERCASE)
+}
+
+func RandNumberic(length ...int) string {
+	if len(length)>0 {
+		return Random(length[0], T_NUMBERIC)
+	}
+	return Random(randBetween(6,32), T_NUMBERIC)
+}
+
+func RandAll(length ...int) string {
+	if len(length)>0 {
+		return Random(length[0], T_ALL)
+	}
+	return Random(randBetween(6,32), T_ALL)
 }
