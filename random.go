@@ -15,7 +15,7 @@ func Rand(args ...interface{}) string {
 		return RandomBetween(args[0].(int),args[1].(int),args[2].(RandType))
 	default:
 		var rt = getRandType()
-		var length = randBetween(6, 32)
+		var length = RandBetween(6, 32)
 		return randomReal(length, rt)
 	}
 }
@@ -39,7 +39,7 @@ func RandomBetween(min, max int, fill ...RandType) string {
 	} else {
 		rt = getRandType()
 	}
-	var length = randBetween(min, max)
+	var length = RandBetween(min, max)
 	return randomReal(length, rt)
 }
 
@@ -72,19 +72,19 @@ func RandString(length ...int) string {
 	if len(length)>0 {
 		return Random(length[0], T_CAPITAL_LOWERCASE)
 	}
-	return Random(randBetween(6,32), T_CAPITAL_LOWERCASE)
+	return Random(RandBetween(6,32), T_CAPITAL_LOWERCASE)
 }
 
 func RandNumberic(length ...int) string {
 	if len(length)>0 {
 		return Random(length[0], T_NUMBERIC)
 	}
-	return Random(randBetween(6,32), T_NUMBERIC)
+	return Random(RandBetween(6,32), T_NUMBERIC)
 }
 
 func RandAll(length ...int) string {
 	if len(length)>0 {
 		return Random(length[0], T_ALL)
 	}
-	return Random(randBetween(6,32), T_ALL)
+	return Random(RandBetween(6,32), T_ALL)
 }

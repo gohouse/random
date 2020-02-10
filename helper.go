@@ -51,6 +51,6 @@ func getCharactorFromStr(str string) string {
 //	return ""
 //}
 
-func randBetween(min, max int) int {
+func RandBetween(min, max int) int {
 	return rand.Intn(max-min+1) + min
 }
