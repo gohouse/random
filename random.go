@@ -15,7 +15,7 @@ func Rand(args ...interface{}) string {
 		return RandomBetween(args[0].(int),args[1].(int),args[2].(RandType))
 	default:
 		var rt = getRandType()
-		var length = RandBetween(6, 32)
+		var length = RandBewtween(6, 32)
 		return randomReal(length, rt)
 	}
 }
